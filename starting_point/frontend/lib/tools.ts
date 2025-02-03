@@ -1,3 +1,44 @@
-export const handleTool = async (toolName: string, parameters: any) => {}
+import type { ChatCompletionTool } from 'openai/resources/index.mjs'
 
-export const tools = []
+export const handleTool = async (toolName: string, parameters: any) => {
+  switch (toolName) {
+    case 'location_search':
+      return locationSearch(parameters)
+  }
+}
+
+export const tools: ChatCompletionTool[] = [
+  {
+    type: 'function',
+    function: {
+      name: 'location_search',
+      description: 'Search hotels and landmarks based on specified location',
+      parameters: {
+        type: 'object',
+        properties: {
+          location: {
+            type: 'string',
+            description: 'The location to search'
+          },
+          query: {
+            type: 'string',
+            description: 'The search query'
+          }
+        },
+        required: ['location', 'query'],
+        additionalProperties: false
+      },
+      strict: true
+    }
+  }
+]
+
+const locationSearch = async ({
+  location,
+  query
+}: {
+  location: string
+  query: string
+}) => {
+  return 'Find hotels and landmarks around ' + location + ' for ' + query
+}
