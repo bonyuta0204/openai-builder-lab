@@ -1,17 +1,18 @@
+import OpenAI from 'openai'
+
+const client = new OpenAI({
+  apiKey: process.env['OPENAI_API_KEY'] // This is the default and can be omitted
+})
+
 export async function POST(request: Request) {
   const { messages } = await request.json()
 
-  console.log('Incoming messages', messages)
-
   try {
-    await new Promise(resolve => setTimeout(resolve, 2000)) // 2s wait
-    return new Response(
-      JSON.stringify({
-        role: 'assistant',
-        content:
-          'This is a default message, update the backend to get a response from the OpenAI API instead.'
-      })
-    )
+    const chatCompletion = await client.chat.completions.create({
+      messages: messages,
+      model: 'gpt-4o-mini'
+    })
+    return new Response(JSON.stringify(chatCompletion.choices[0].message))
   } catch (error: any) {
     console.error('Error in POST handler:', error)
     return new Response(JSON.stringify({ error: error.message }), {
