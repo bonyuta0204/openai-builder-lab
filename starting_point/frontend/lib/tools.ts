@@ -40,5 +40,30 @@ const locationSearch = async ({
   location: string
   query: string
 }) => {
-  return 'Find hotels and landmarks around ' + location + ' for ' + query
+  return [
+    {
+      name: 'Waikiki Beach Marriott Resort & Spa',
+      location: 'Honolulu, Oahu',
+      rating: 4.5,
+      price: '$350/night',
+      features: ['Ocean view', 'Spa', '3 restaurants'],
+      image: 'https://example.com/waikiki-marriott.jpg'
+    },
+    {
+      name: 'Grand Hyatt Kauai Resort & Spa',
+      location: 'Koloa, Kauai',
+      rating: 4.7,
+      price: '$450/night',
+      features: ['Water park', 'Golf course', '5 restaurants'],
+      image: 'https://example.com/grand-hyatt-kauai.jpg'
+    },
+    {
+      name: 'Four Seasons Resort Maui at Wailea',
+      location: 'Wailea, Maui',
+      rating: 4.8,
+      price: '$650/night',
+      features: ['Private beach', 'Luxury spa', 'Michelin-starred dining'],
+      image: 'https://example.com/four-seasons-maui.jpg'
+    }
+  ]
 }

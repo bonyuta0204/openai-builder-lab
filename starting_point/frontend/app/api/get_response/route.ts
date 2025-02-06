@@ -1,3 +1,4 @@
+import { FunctionCallItem, MessageItem } from '@/lib/assistant'
 import { tools } from '@/lib/tools'
 import OpenAI from 'openai'
 
@@ -16,22 +17,7 @@ export async function POST(request: Request) {
     })
     const message = chatCompletion.choices[0].message
 
-    if (message.tool_calls) {
-      const toolCall = message.tool_calls[0]
-
-      const response = {
-        type: 'function_call',
-        id: toolCall.id,
-        name: toolCall.function.name,
-        arguments: toolCall.function.arguments,
-        parsedArguments: JSON.parse(toolCall.function.arguments),
-        output: null
-      }
-
-      return new Response(JSON.stringify(response))
-    } else {
-      return new Response(JSON.stringify(message))
-    }
+    return new Response(JSON.stringify(message))
   } catch (error: any) {
     console.error('Error in POST handler:', error)
     return new Response(JSON.stringify({ error: error.message }), {
