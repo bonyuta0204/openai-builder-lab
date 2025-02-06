@@ -56,34 +56,38 @@ export const handleTurn = async () => {
     const data: ChatCompletionMessageParam = await response.json()
 
     if ('tool_calls' in data && data.tool_calls) {
-      const toolCall = data.tool_calls[0]
-      chatMessages.push({
-        type: 'function_call',
-        status: 'in_progress',
-        id: toolCall.id,
-        name: toolCall.function.name,
-        arguments: toolCall.function.arguments,
-        parsedArguments: JSON.parse(toolCall.function.arguments),
-        output: null
-      })
-      setChatMessages([...chatMessages])
       // Update conversation items
       conversationItems.push(data)
       setConversationItems([...conversationItems])
 
-      const result = await handleTool(
-        toolCall.function.name,
-        JSON.parse(toolCall.function.arguments)
+      await Promise.all(
+        data.tool_calls.map(async toolCall => {
+          chatMessages.push({
+            type: 'function_call',
+            status: 'in_progress',
+            id: toolCall.id,
+            name: toolCall.function.name,
+            arguments: toolCall.function.arguments,
+            parsedArguments: JSON.parse(toolCall.function.arguments),
+            output: null
+          })
+          setChatMessages([...chatMessages])
+
+          const result = await handleTool(
+            toolCall.function.name,
+            JSON.parse(toolCall.function.arguments)
+          )
+
+          // update conversation items
+          conversationItems.push({
+            role: 'tool',
+            tool_call_id: toolCall.id,
+            content: result ? JSON.stringify(result) : ''
+          })
+
+          setConversationItems([...conversationItems])
+        })
       )
-
-      // update conversation items
-      conversationItems.push({
-        role: 'tool',
-        tool_call_id: toolCall.id,
-        content: result ? JSON.stringify(result) : ''
-      })
-
-      setConversationItems([...conversationItems])
 
       await handleTurn()
     } else {
