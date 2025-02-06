@@ -54,7 +54,6 @@ export const handleTurn = async () => {
     }
 
     const data: ChatCompletionMessageParam = await response.json()
-    console.log('Response', data)
 
     if ('tool_calls' in data && data.tool_calls) {
       const toolCall = data.tool_calls[0]
@@ -74,19 +73,18 @@ export const handleTurn = async () => {
 
       const result = await handleTool(
         toolCall.function.name,
-        toolCall.function.arguments
+        JSON.parse(toolCall.function.arguments)
       )
 
       // update conversation items
       conversationItems.push({
         role: 'tool',
         tool_call_id: toolCall.id,
-        content: String(result ?? '')
+        content: result ? JSON.stringify(result) : ''
       })
 
       setConversationItems([...conversationItems])
 
-      console.log('Calling handleTurn')
       await handleTurn()
     } else {
       // Update chat messages
