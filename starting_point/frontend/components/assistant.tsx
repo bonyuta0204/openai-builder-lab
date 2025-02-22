@@ -1,7 +1,6 @@
 'use client'
 import React, { useState } from 'react'
 import Chat from './chat'
-import LoadingIndicator from './loading-indicator'
 import useConversationStore from '@/stores/useConversationStore'
 import { handleTurn, Item, startVoiceChat } from '@/lib/assistant'
 import { ChatCompletionMessageParam } from 'openai/resources/chat/completions'

@@ -6,7 +6,14 @@ import ToolCall from './tool-call'
 const meta: Meta<typeof ToolCall> = {
   title: 'ToolCall',
   tags: ['autodocs'],
-  component: ToolCall
+  component: ToolCall,
+  decorators: [
+    story => (
+      <div className="p-4 w-1/2 rounded-t-2xl shadow-lg bg-gray-100">
+        {story()}
+      </div>
+    )
+  ]
 }
 
 export default meta

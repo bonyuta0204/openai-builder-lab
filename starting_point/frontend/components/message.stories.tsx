@@ -5,6 +5,13 @@ import Message from './message'
 const meta = {
   title: 'Message',
   tags: ['autodocs'],
+  decorators: [
+    story => (
+      <div className="p-4 w-1/2 rounded-t-2xl shadow-lg bg-gray-100">
+        {story()}
+      </div>
+    )
+  ],
   component: Message
 } satisfies Meta<typeof Message>
 
