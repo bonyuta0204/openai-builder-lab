@@ -9,12 +9,19 @@ import './message.css'
 interface ChatProps {
   items: Item[]
   onSendMessage: (message: string) => void
+  onStartVoiceChat: () => void
   loading: boolean
 }
 
-const Chat: React.FC<ChatProps> = ({ items, onSendMessage, loading }) => {
+const Chat: React.FC<ChatProps> = ({
+  items,
+  onSendMessage,
+  onStartVoiceChat,
+  loading
+}) => {
   const itemsEndRef = useRef<HTMLDivElement>(null)
   const [inputMessageText, setinputMessageText] = useState<string>('')
+  const [isComposing, setIsComposing] = useState(false)
 
   const scrollToBottom = () => {
     itemsEndRef.current?.scrollIntoView({ behavior: 'instant' })
@@ -65,8 +72,10 @@ const Chat: React.FC<ChatProps> = ({ items, onSendMessage, loading }) => {
                       className="m-0 resize-none border-0 focus:outline-none text-sm bg-transparent px-0 py-2 max-h-[20dvh]"
                       value={inputMessageText}
                       onChange={e => setinputMessageText(e.target.value)}
+                      onCompositionStart={() => setIsComposing(true)}
+                      onCompositionEnd={() => setIsComposing(false)}
                       onKeyDown={e => {
-                        if (e.key === 'Enter' && !e.shiftKey) {
+                        if (e.key === 'Enter' && !e.shiftKey && !isComposing) {
                           e.preventDefault()
                           onSendMessage(inputMessageText)
                           setinputMessageText('')
@@ -74,11 +83,36 @@ const Chat: React.FC<ChatProps> = ({ items, onSendMessage, loading }) => {
                       }}
                     />
                   </div>
+
+                  <button
+                    data-testid="mic-button"
+                    className="flex size-8 items-center justify-center rounded-full bg-black text-white transition-colors hover:opacity-70 focus-visible:outline-none focus-visible:outline-black disabled:bg-[#D7D7D7] disabled:text-[#f4f4f4] disabled:hover:opacity-100"
+                    onClick={e => {
+                      onStartVoiceChat()
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="icon-xl mr-1"
+                    >
+                      <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                      <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                      <line x1="12" x2="12" y1="19" y2="22" />
+                    </svg>
+                  </button>
                   <button
                     disabled={!inputMessageText}
                     data-testid="send-button"
                     className="flex size-8 items-center justify-center rounded-full bg-black text-white transition-colors hover:opacity-70 focus-visible:outline-none focus-visible:outline-black disabled:bg-[#D7D7D7] disabled:text-[#f4f4f4] disabled:hover:opacity-100"
-                    onClick={() => {
+                    onClick={e => {
                       onSendMessage(inputMessageText)
                       setinputMessageText('')
                     }}

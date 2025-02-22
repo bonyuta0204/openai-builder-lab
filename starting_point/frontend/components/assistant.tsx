@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import Chat from './chat'
 import LoadingIndicator from './loading-indicator'
 import useConversationStore from '@/stores/useConversationStore'
-import { handleTurn, Item } from '@/lib/assistant'
+import { handleTurn, Item, startVoiceChat } from '@/lib/assistant'
 import { ChatCompletionMessageParam } from 'openai/resources/chat/completions'
 
 const Assistant: React.FC = () => {
@@ -37,11 +37,16 @@ const Assistant: React.FC = () => {
     }
   }
 
+  const handleStartVoiceChat = () => {
+    startVoiceChat()
+  }
+
   return (
     <div className="h-full p-4 w-full rounded-t-2xl shadow-lg bg-gray-100">
       <Chat
         items={chatMessages}
         onSendMessage={handleSendMessage}
+        onStartVoiceChat={handleStartVoiceChat}
         loading={loading}
       />
     </div>
