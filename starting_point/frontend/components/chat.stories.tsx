@@ -17,6 +17,13 @@ const meta = {
   title: 'Chat',
   tags: ['autodocs'],
   component: Chat,
+  decorators: [
+    story => (
+      <div className="h-full p-4 w-full rounded-t-2xl shadow-lg bg-gray-100">
+        {story()}
+      </div>
+    )
+  ],
   args: {
     ...ActionsData
   }
