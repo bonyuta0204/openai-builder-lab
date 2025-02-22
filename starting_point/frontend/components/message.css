@@ -16,7 +16,7 @@
   border-radius: 50%;
   display: inline-block;
   animation: bounce 1.4s infinite ease-in-out both;
-  background-color: white;
+  background-color: gainsboro;
 }
 
 .dot:nth-child(1) {

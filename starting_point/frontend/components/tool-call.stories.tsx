@@ -70,7 +70,7 @@ export const ConsecutiveCalls: Story = {
       name: 'function_name',
       arguments: 'arguments',
       parsedArguments: {},
-      output: sampleOutput
+      output: '{"items":[{"id":"1","name":"Item 1","pri0.99}]}'
     }
   }
 }

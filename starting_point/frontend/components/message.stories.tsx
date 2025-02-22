@@ -7,9 +7,7 @@ const meta = {
   tags: ['autodocs'],
   decorators: [
     story => (
-      <div className="p-4 w-1/2 rounded-t-2xl shadow-lg bg-gray-100">
-        {story()}
-      </div>
+      <div className="p-4 rounded-t-2xl shadow-lg bg-slate-50">{story()}</div>
     )
   ],
   component: Message
@@ -46,7 +44,39 @@ export const Assistant: Story = {
     message: {
       type: 'message',
       role: 'assistant',
-      content: 'Hello!'
+      content: `# Here's how to use Git effectively
+
+## Basic Commands
+
+First, let's go through some basic Git commands:
+
+\`\`\`bash
+git init
+git add .
+git commit -m "Initial commit"
+git push origin main
+\`\`\`
+
+### Why use Git?
+
+Git provides several advantages:
+- **Version Control**: Track changes in your code
+- **Collaboration**: Work with others seamlessly
+- **Backup**: Keep your code safe in remote repositories
+
+### Best Practices
+
+1. Write clear commit messages
+2. Use branches for new features
+3. Review code before merging
+
+> Remember: Always pull before you push to avoid conflicts!
+
+You can learn more about Git by visiting [Git Documentation](https://git-scm.com/doc).
+
+---
+
+*This is just an example of markdown formatting capabilities.*`
     },
     loading: false
   }
