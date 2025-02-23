@@ -35,11 +35,15 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 20  # Ensure consistency across jobs
           cache: 'npm'
           cache-dependency-path: './starting_point/frontend/package-lock.json'
-      - name: Install dependencies
-        run: npm ci
+      - name: Clean install dependencies
+        run: |
+          rm -rf node_modules package-lock.json
+          npm ci
+      - name: Rebuild native modules
+        run: npm rebuild
       - name: Install Playwright
         run: npx playwright install --with-deps
       - name: Build Storybook
