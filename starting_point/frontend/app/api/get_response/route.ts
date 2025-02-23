@@ -1,4 +1,3 @@
-import { FunctionCallItem, MessageItem } from '@/lib/assistant'
 import { tools } from '@/lib/tools'
 import OpenAI from 'openai'
 

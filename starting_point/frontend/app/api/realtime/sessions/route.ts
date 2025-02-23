@@ -1,9 +1,4 @@
-import OpenAI from 'openai'
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY
-})
-
-export async function GET(request: Request) {
+export async function GET() {
   const r = await fetch('https://api.openai.com/v1/realtime/sessions', {
     method: 'POST',
     headers: {
