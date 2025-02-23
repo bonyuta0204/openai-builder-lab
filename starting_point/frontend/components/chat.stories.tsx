@@ -2,11 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 
 import Chat from './chat'
 import { expect, fn, userEvent, within } from '@storybook/test'
-import {
-  Default as DefaultMessage,
-  Loading,
-  Assistant
-} from './message.stories'
+import { Default as DefaultMessage, Assistant } from './message.stories'
 
 const ActionsData = {
   onSendMessage: fn(),
