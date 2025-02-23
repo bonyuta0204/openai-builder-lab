@@ -5,6 +5,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import ToolCall from './tool-call'
 import Message from './message'
 import './message.css'
+import { FaMicrophone } from 'react-icons/fa'
+import { FaArrowUp } from 'react-icons/fa'
 
 interface ChatProps {
   items: Item[]
@@ -85,53 +87,24 @@ const Chat: React.FC<ChatProps> = ({
                   </div>
 
                   <button
-                    data-testid="mic-button"
+                    aria-label="Voice chat"
                     className="flex size-8 items-center justify-center rounded-full bg-black text-white transition-colors hover:opacity-70 focus-visible:outline-none focus-visible:outline-black disabled:bg-[#D7D7D7] disabled:text-[#f4f4f4] disabled:hover:opacity-100"
                     onClick={e => {
                       onStartVoiceChat()
                     }}
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="icon-xl mr-1"
-                    >
-                      <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
-                      <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
-                      <line x1="12" x2="12" y1="19" y2="22" />
-                    </svg>
+                    <FaMicrophone />
                   </button>
                   <button
                     disabled={!inputMessageText}
-                    data-testid="send-button"
+                    aria-label="Send message"
                     className="flex size-8 items-center justify-center rounded-full bg-black text-white transition-colors hover:opacity-70 focus-visible:outline-none focus-visible:outline-black disabled:bg-[#D7D7D7] disabled:text-[#f4f4f4] disabled:hover:opacity-100"
                     onClick={e => {
                       onSendMessage(inputMessageText)
                       setinputMessageText('')
                     }}
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="32"
-                      height="32"
-                      fill="none"
-                      viewBox="0 0 32 32"
-                      className="icon-2xl"
-                    >
-                      <path
-                        fill="currentColor"
-                        fillRule="evenodd"
-                        d="M15.192 8.906a1.143 1.143 0 0 1 1.616 0l5.143 5.143a1.143 1.143 0 0 1-1.616 1.616l-3.192-3.192v9.813a1.143 1.143 0 0 1-2.286 0v-9.813l-3.192 3.192a1.143 1.143 0 1 1-1.616-1.616z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
+                    <FaArrowUp />
                   </button>
                 </div>
               </div>

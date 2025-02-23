@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
 import Chat from './chat'
-import { fn } from '@storybook/test'
+import { expect, fn, userEvent, within } from '@storybook/test'
 import {
   Default as DefaultMessage,
   Loading,
@@ -37,5 +37,28 @@ export const Default: Story = {
   args: {
     items: [DefaultMessage.args.message, Assistant.args.message],
     loading: false
+  }
+}
+
+export const WithInteraction: Story = {
+  args: {
+    items: [DefaultMessage.args.message],
+    loading: false
+  },
+  play: async ({ canvasElement, args }) => {
+    const canvas = within(canvasElement)
+    const input = canvas.getByRole('textbox')
+    const sendButton = canvas.getByRole('button', { name: /send/i })
+
+    // Type a message
+    await userEvent.type(input, 'Hello, this is a test message')
+    expect(input).toHaveValue('Hello, this is a test message')
+
+    // Click send button
+    await userEvent.click(sendButton)
+    expect(args.onSendMessage).toHaveBeenCalledWith(
+      'Hello, this is a test message'
+    )
+    expect(input).toHaveValue('')
   }
 }
